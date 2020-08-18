@@ -22,7 +22,7 @@ pip install -r requirements.txt
 
 * এবার এটাকে বানাবো  
 ```
-pyinstaller --onfile -c fuck_online_class.py
+pyinstaller --onefile -c fuck_online_class.py
 ```
 
 * দরকারি ফাইলগুলো জায়গা মতো ভরি  

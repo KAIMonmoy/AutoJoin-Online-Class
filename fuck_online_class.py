@@ -20,22 +20,53 @@ def process_meetings():
 
         meetings = reader(csv_file)
         for row in meetings:
-            link, start_time, end_time = row
+            if len(row) != 2 and len(row) != 3:
+                if len(row) > 1:
+                    print("\nSorry!\nInvalid Argument: " + str(row))
+                continue
+
+            if len(row) == 3:
+                link, start_time, end_time = row
+            else:
+                link, start_time = row
+                end_time = None
+
+            if link is None or type(link) is not str:
+                print("\nSorry!\nInvalid Format: link<" + str(link) + ">")
+                continue
+
+            if start_time is None or type(start_time) is not str or start_time.find(":") <= 0:
+                print("\nSorry!\nInvalid Format: start_time<" + str(start_time) + ">")
+                continue
+
+            if end_time is not None and end_time.find(":") <= 0:
+                print("\nSorry!\nInvalid Format: end_time<" + str(end_time) + ">")
+                continue
+
+            link = link.strip()
+            start_time = start_time.strip()
+            if end_time is not None:
+                end_time = end_time.strip()
 
             print("\nCurrent Meeting: ")
             print("Link  :\t" + link)
             print("Start :\t" + start_time)
-            print("End   :\t" + end_time + "\n")
+            if end_time is not None:
+                print("End   :\t" + end_time + "\n")
 
-            start_datetime_obj = datetime.strptime(
-                datetime.now().strftime("%d/%m/%y") + " " + start_time, '%d/%m/%y %H:%M'
-            )
+            try:
+                start_datetime_obj = datetime.strptime(
+                    datetime.now().strftime("%d/%m/%y") + " " + start_time, '%d/%m/%y %H:%M'
+                )
+                if end_time is not None:
+                    end_datetime_obj = datetime.strptime(
+                        datetime.now().strftime("%d/%m/%y") + " " + end_time, '%d/%m/%y %H:%M'
+                    )
+            except (ValueError, TypeError):
+                print("\nSorry!\nFailed to parse time!")
+                continue
 
-            end_datetime_obj = datetime.strptime(
-                datetime.now().strftime("%d/%m/%y") + " " + end_time, '%d/%m/%y %H:%M'
-            )
-
-            if datetime.now() > end_datetime_obj:
+            if end_time is not None and datetime.now() > end_datetime_obj:
                 print("Skipping Meeting: " + ", ".join(row) + "\n")
                 continue
 
@@ -48,20 +79,21 @@ def process_meetings():
             sleep(30)
 
             leave_button = None
-            for i in range(10):
-                if i < 3:
-                    pyautogui.hotkey('alt', 'q')
-                sleep(3)
-                leave_button = pyautogui.locateCenterOnScreen('leave_button.png')
-                sleep(2)
-                if leave_button is not None:
-                    break
+            if end_time is not None and len(end_time) >= 3:
+                for i in range(10):
+                    if i < 3:
+                        pyautogui.hotkey('alt', 'q')
+                    sleep(3)
+                    leave_button = pyautogui.locateCenterOnScreen('leave_button.png')
+                    sleep(2)
+                    if leave_button is not None:
+                        break
 
             while datetime.now() < end_datetime_obj:
                 sleep(30)
                 pass
 
-            if leave_button is not None:
+            if end_time is not None and len(end_time) >= 3 and leave_button is not None:
                 pyautogui.moveTo(leave_button)
                 pyautogui.click()
                 pyautogui.move(0, -100)
@@ -119,7 +151,7 @@ if __name__ == "__main__":
         process_meetings()
 
     print(
-'''
+        '''
                                       __            
            _____ ____   ____   _____ / /____ _ _  __
           / ___// __ \ / __ \ / ___// // __ `/| |/_/
@@ -127,5 +159,4 @@ if __name__ == "__main__":
         /____//_/ /_/ \____//_/   /_/ \__,_//_/|_|  
                                                     
 '''
-          )
-    input("\nPress 'Enter' to exit...")
+    )

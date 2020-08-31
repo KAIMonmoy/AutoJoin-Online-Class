@@ -22,7 +22,7 @@ pip install -r requirements.txt
 
 * এবার এটাকে বানাবো  
 ```
-pyinstaller --onfile -c fuck_online_class.py
+pyinstaller --onefile -c fuck_online_class.py
 ```
 
 * দরকারি ফাইলগুলো জায়গা মতো ভরি  
@@ -54,6 +54,10 @@ https://zoom.us/j/pqr?pwd=def,09:00,09:50
 * এই মালটি ব্যবহার করার আগে zoom link এ গেলে ব্রাউজারে যেই নিচের ছবির মতো pop-up টি আসে সেটাতে *Always allow zoom.us to open links of this type in the associated app* অপশনটিতে টিক চিহ্ন দেই এবং এরপর **Open Zoom Meetings** বাটনটিতে চাপ প্রয়োগ করি।
 
 ![browser-popup](./readme/browser-popup.png)
+
+* দয়া করে *Settings* এর *Audio* তে গিয়ে **Automatically joinaudio by comuter when joining a meeting** অপশনটি টিক দিন।
+
+![browser-popup](./readme/auto-join-audio.png)
 
 * বানানোর আগে মশলা-পাতি লোড করতে যেন না ভুলে যাই
 

@@ -55,7 +55,7 @@ https://zoom.us/j/pqr?pwd=def,09:00,09:50
 
 ![browser-popup](./readme/browser-popup.png)
 
-* দয়া করে *Settings* এর *Audio* তে গিয়ে **Automatically joinaudio by comuter when joining a meeting** অপশনটি টিক দিন।
+* দয়া করে *Settings* এর *Audio* তে গিয়ে **Automatically join audio by comuter when joining a meeting** অপশনটি টিক দিন।
 
 ![browser-popup](./readme/auto-join-audio.png)
 
